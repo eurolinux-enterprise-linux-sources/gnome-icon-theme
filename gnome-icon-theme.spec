@@ -1,12 +1,13 @@
 Summary: GNOME icon theme
 Name: gnome-icon-theme
 Version: 2.28.0
-Release: 2%{?dist}
+Release: 8%{?dist}
 Source0: http://download.gnome.org/sources/gnome-icon-theme/2.28/%{name}-%{version}.tar.bz2
 Source1: gnome-icon-theme-extra-device-icons-5.tar.bz2
 Source2: legacy-icon-mapping.xml
 Source3: window.png
 Source4: gtk_print_icons.tar.bz2
+Source5: microphone-sensitivity-icons.tar
 License: GPL+
 BuildArch: noarch
 Group: User Interface/Desktops
@@ -30,6 +31,8 @@ This package contains the default icon theme used by the GNOME desktop.
 %prep
 %setup -q
 %patch0 -p1 -b .translations
+
+tar xf %{SOURCE5}
 
 %build
 %configure --disable-hicolor-check
@@ -64,6 +67,8 @@ cp %{SOURCE3} $RPM_BUILD_ROOT/usr/share/icons/gnome/16x16/apps
 
 tar xj -C $RPM_BUILD_ROOT/usr/share/icons/gnome -f %{SOURCE4}
 
+tar x -C $RPM_BUILD_ROOT/usr/share/icons/gnome -f %{SOURCE5}
+
 %clean
 rm -rf $RPM_BUILD_ROOT
 
@@ -84,6 +89,22 @@ done
 %{_datadir}/pkgconfig/gnome-icon-theme.pc
 
 %changelog
+* Thu Apr  1 2016 Matthias Clasen <mclasen@redhat.com> - 2.28.0-8
+- Remove an extraneous directory
+Related: #1316150
+
+* Thu Mar 29 2016 Matthias Clasen <mclasen@redhat.com> - 2.28.0-7
+- Rename the tarball
+Related: #1316150
+
+* Thu Mar 29 2016 Matthias Clasen <mclasen@redhat.com> - 2.28.0-6
+- Add the other microphone-sensitivity-* icons as well
+Resolves: #1316150
+
+* Thu Mar 24 2016 Matthias Clasen <mclasen@redhat.com> - 2.28.0-5
+- Add microphone-sensitivity-muted icons
+Resolves: #1316150
+
 * Mon May 17 2010 Matthias Clasen <mclasen@redhat.com> - 2.28.0-2
 - Updated translations
 Resolves: #589202
