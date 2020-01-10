@@ -2,6 +2,8 @@ DISTCHECK_CONFIGURE_FLAGS = --disable-icon-mapping
 
 SUBDIRS = po $(SVGSRCDIR)
 
+ACLOCAL_AMFLAGS = -I m4 ${ACLOCAL_FLAGS}
+
 theme_in_files = index.theme.in.in
 theme_DATA = $(theme_in_files:.theme.in.in=.theme)
 
@@ -81,7 +83,9 @@ install-data-local:
 	fi
 
 install-data-hook:
-	$(GTK_UPDATE_ICON_CACHE) -q $(DESTDIR)$(themedir)
+	if test -z "$(DESTDIR)" ; then \
+		$(GTK_UPDATE_ICON_CACHE) -q $(DESTDIR)$(themedir); \
+	fi
 
 uninstall-hook:
 	@rm -f  $(DESTDIR)$(themedir)/icon-theme.cache

@@ -1,3 +1,22 @@
+3.12.0
+  - no changes
+
+3.11.92
+  - semi starred icon (bug #689098)
+  - better fir for Files and save/open icons
+  - addon and repositories icons (bug #724669)
+
+3.11.5
+  - scale gedit properly
+  - media-player cleanup
+  - make folder-download emblem more legible
+
+3.10.0
+  - build fixes
+
+3.9.5
+  - color shift for folder (bug #700757)
+
 3.8.2
   - heaphones & headset
   - notifications panel updated

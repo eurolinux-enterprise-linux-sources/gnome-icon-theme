@@ -1,11 +1,11 @@
 Summary: GNOME icon theme
 Name: gnome-icon-theme
-Version: 3.8.2
-Release: 2%{?dist}
+Version: 3.12.0
+Release: 1%{?dist}
 #VCS: git:git://git.gnome.org/gnome-icon-theme
-Source0: http://download.gnome.org/sources/gnome-icon-theme/3.8/%{name}-%{version}.tar.xz
+Source0: http://download.gnome.org/sources/gnome-icon-theme/3.12/%{name}-%{version}.tar.xz
 Source1: legacy-icon-mapping.xml
-License: GPL+
+License: LGPLv3+
 BuildArch: noarch
 Group: User Interface/Desktops
 BuildRequires: icon-naming-utils >= 0.8.7
@@ -14,6 +14,7 @@ BuildRequires: librsvg2
 BuildRequires: intltool
 BuildRequires: gtk2
 Requires: hicolor-icon-theme
+Requires: pkgconfig
 
 %description
 This package contains the default icon theme used by the GNOME desktop.
@@ -27,6 +28,15 @@ Requires: %{name} = %{version}-%{release}
 This package contains symlinks to make the icons in gnome-icon-theme
 available under old names.
 
+%package devel
+
+Summary: Development files for gnome-icon-theme
+Group: Development/Libraries
+Requires: %{name} = %{version}-%{release}
+
+%description devel
+Development files for gnome-icon-theme
+
 %prep
 %setup -q
 
@@ -36,7 +46,6 @@ available under old names.
 %install
 make install DESTDIR=$RPM_BUILD_ROOT
 
-rm $RPM_BUILD_ROOT%{_datadir}/icons/gnome/icon-theme.cache
 touch $RPM_BUILD_ROOT%{_datadir}/icons/gnome/icon-theme.cache
 
 cp %{SOURCE1} .
@@ -106,15 +115,20 @@ gtk-update-icon-cache %{_datadir}/icons/gnome &>/dev/null || :
 
 %files -f files.txt
 %doc COPYING AUTHORS
-%dir %{_datadir}/pkgconfig
-%{_datadir}/pkgconfig/gnome-icon-theme.pc
 %ghost %{_datadir}/icons/gnome/icon-theme.cache
 
 %files legacy -f legacy.txt
 
+%files devel
+%{_datadir}/pkgconfig/gnome-icon-theme.pc
+
 %changelog
-* Sat Jun  8 2013 Matthias Clasen <mclasen@redhat.com> - 3.8.2-2
-- Drop dep on pkgconfig, instead co-own /usr/share/pkgconfig
+* Tue Mar 25 2014 Richard Hughes <rhughes@redhat.com> - 3.12.0-1
+- Update to 3.12.0
+- Resolves: #1174379
+
+* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.8.2-3
+- Mass rebuild 2013-12-27
 
 * Mon May 13 2013 Richard Hughes <rhughes@redhat.com> - 3.8.2-1
 - Update to 3.8.2
