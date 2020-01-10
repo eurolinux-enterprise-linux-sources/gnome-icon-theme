@@ -1,7 +1,7 @@
 Summary: GNOME icon theme
 Name: gnome-icon-theme
 Version: 3.8.2
-Release: 3%{?dist}
+Release: 2%{?dist}
 #VCS: git:git://git.gnome.org/gnome-icon-theme
 Source0: http://download.gnome.org/sources/gnome-icon-theme/3.8/%{name}-%{version}.tar.xz
 Source1: legacy-icon-mapping.xml
@@ -14,7 +14,6 @@ BuildRequires: librsvg2
 BuildRequires: intltool
 BuildRequires: gtk2
 Requires: hicolor-icon-theme
-Requires: pkgconfig
 
 %description
 This package contains the default icon theme used by the GNOME desktop.
@@ -107,14 +106,15 @@ gtk-update-icon-cache %{_datadir}/icons/gnome &>/dev/null || :
 
 %files -f files.txt
 %doc COPYING AUTHORS
+%dir %{_datadir}/pkgconfig
 %{_datadir}/pkgconfig/gnome-icon-theme.pc
 %ghost %{_datadir}/icons/gnome/icon-theme.cache
 
 %files legacy -f legacy.txt
 
 %changelog
-* Fri Dec 27 2013 Daniel Mach <dmach@redhat.com> - 3.8.2-3
-- Mass rebuild 2013-12-27
+* Sat Jun  8 2013 Matthias Clasen <mclasen@redhat.com> - 3.8.2-2
+- Drop dep on pkgconfig, instead co-own /usr/share/pkgconfig
 
 * Mon May 13 2013 Richard Hughes <rhughes@redhat.com> - 3.8.2-1
 - Update to 3.8.2
